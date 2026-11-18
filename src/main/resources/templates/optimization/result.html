@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Resultado · EduOptima AI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<nav class="navbar navbar-expand navbar-dark bg-primary mb-4">
+    <div class="container">
+        <a class="navbar-brand" th:href="@{/}">EduOptima AI</a>
+        <div class="navbar-nav">
+            <a class="nav-link" th:href="@{/students}">Estudiantes</a>
+            <a class="nav-link" th:href="@{/tutors}">Tutores</a>
+            <a class="nav-link" th:href="@{/optimize}">Optimizar</a>
+            <a class="nav-link" th:href="@{/history}">Historial</a>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <h2>Resultado de la optimización</h2>
+    <div class="card card-body shadow-sm mb-3">
+        <p class="mb-1">Estado: <strong th:text="${response.status}"></strong></p>
+        <p class="mb-0">Valor óptimo: <strong th:text="${response.objectiveValue}"></strong></p>
+    </div>
+    <table class="table table-striped bg-white shadow-sm">
+        <thead class="table-success"><tr>
+            <th>Estudiante</th><th>Tutor</th><th>Tema</th><th>Score</th>
+        </tr></thead>
+        <tbody>
+        <tr th:each="a : ${assignments}">
+            <td th:text="${a.studentName}"></td>
+            <td th:text="${a.tutorName}"></td>
+            <td th:text="${a.topic}"></td>
+            <td th:text="${a.score}"></td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(assignments)}"><td colspan="4" class="text-center text-muted">No se generaron asignaciones</td></tr>
+        </tbody>
+    </table>
+    <a th:href="@{/history}" class="btn btn-primary">Ver historial</a>
+    <a th:href="@{/}" class="btn btn-secondary">Volver al inicio</a>
+</div>
+</body>
+</html>

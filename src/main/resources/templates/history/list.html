@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Historial · EduOptima AI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<nav class="navbar navbar-expand navbar-dark bg-primary mb-4">
+    <div class="container">
+        <a class="navbar-brand" th:href="@{/}">EduOptima AI</a>
+        <div class="navbar-nav">
+            <a class="nav-link" th:href="@{/students}">Estudiantes</a>
+            <a class="nav-link" th:href="@{/tutors}">Tutores</a>
+            <a class="nav-link" th:href="@{/optimize}">Optimizar</a>
+            <a class="nav-link" th:href="@{/history}">Historial</a>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <div class="d-flex justify-content-between mb-3">
+        <h2>Historial de asignaciones</h2>
+        <form th:action="@{/history/clear}" method="post" onsubmit="return confirm('¿Borrar todo el historial?')">
+            <button type="submit" class="btn btn-outline-danger">Borrar historial</button>
+        </form>
+    </div>
+    <table class="table table-striped bg-white shadow-sm">
+        <thead class="table-primary"><tr>
+            <th>Fecha</th><th>Estudiante</th><th>Tutor</th><th>Tema</th><th>Score</th>
+        </tr></thead>
+        <tbody>
+        <tr th:each="h : ${history}">
+            <td th:text="${#temporals.format(h.executedAt, 'dd/MM/yyyy HH:mm:ss')}"></td>
+            <td th:text="${h.studentName}"></td>
+            <td th:text="${h.tutorName}"></td>
+            <td th:text="${h.topic}"></td>
+            <td th:text="${h.score}"></td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(history)}"><td colspan="5" class="text-center text-muted">Aún no hay optimizaciones guardadas</td></tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
